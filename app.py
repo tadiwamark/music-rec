@@ -20,7 +20,9 @@ def compute_similarities(songs):
     similarities = {}
     for i in range(len(cosine_similarities)):
         similar_indices = cosine_similarities[i].argsort()[:-50:-1]
-        similarities[songs['song'].iloc[i]] = [(cosine_similarities[i][x], songs['song'][x], songs['artist'][x]) for x in similar_indices][1:]
+        # Use song name and artist name as the key
+        key = songs['song'].iloc[i] + " - " + songs['artist'].iloc[i]
+        similarities[key] = [(cosine_similarities[i][x], songs['song'][x] + " - " + songs['artist'][x]) for x in similar_indices][1:]
     return similarities
 
 # The recommendation class
@@ -42,13 +44,15 @@ recommender = ContentBasedRecommender(similarities)
 
 # Streamlit app
 st.title('Music Recommender System')
-song = st.selectbox('Select a song', songs['song'].unique())
+song = st.selectbox('Select a song', songs['song'] + " - " + songs['artist'])
 number_songs = st.slider('Number of recommendations', 1, 10, 4)
 
 if st.button('Recommend'):
     results = recommender.recommend(song, number_songs)
     if results:
-        for idx, (score, song, artist) in enumerate(results, 1):
+        for idx, (score, song) in enumerate(results, 1):
+            # Split the song and artist for display
+            song, artist = song.split(" - ")
             st.write(f"Recommendation {idx}: {song} by {artist} with similarity score {score:.3f}")
     else:
         st.write("No recommendations found. Please select a different song.")
