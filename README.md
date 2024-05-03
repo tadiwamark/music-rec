@@ -1,6 +1,6 @@
 https://content-based-music-recommender-system.streamlit.app/
 
-# Music recommender system
+# Content-based recommender for Music  
 
 ## Group Members
 Tungamiraishe Mukwena R204452G HAI <br />
