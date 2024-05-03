@@ -1,3 +1,12 @@
+"""
+Group Members
+
+Tungamiraishe Mukwena R204452G HAI
+Nyasha Zhou R204449M HAI
+Tadiwanashe Nyaruwata R204445V HAI
+"""
+
+
 import streamlit as st
 import numpy as np
 import pandas as pd
